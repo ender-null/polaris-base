@@ -1,0 +1,24 @@
+FROM node:alpine
+
+RUN mkdir -p /usr/src/tdlib
+WORKDIR /usr/src/tdlib
+
+RUN apk update
+RUN apk upgrade
+RUN apk add --update python make gcc g++ alpine-sdk linux-headers git zlib-dev openssl-dev gperf php php-ctype cma>
+RUN git clone https://github.com/tdlib/td.git
+WORKDIR /usr/src/tdlib/td
+
+RUN rm -rf build
+RUN mkdir -p /usr/src/tdlib/td/build
+WORKDIR /usr/src/tdlib/td/build
+RUN export CXXFLAGS=""
+RUN cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX:PATH=/usr/local ..
+RUN cmake --build . --target prepare_cross_compiling
+WORKDIR /usr/src/tdlib/td
+RUN php SplitSource.php
+WORKDIR /usr/src/tdlib/td/build
+RUN cmake --build . --target install
+WORKDIR /usr/src/tdlib/
+RUN php SplitSource.php --undo
+RUN ls -l /usr/local
