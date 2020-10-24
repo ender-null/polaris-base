@@ -19,6 +19,7 @@ WORKDIR /usr/src/tdlib/td
 RUN php SplitSource.php
 WORKDIR /usr/src/tdlib/td/build
 RUN cmake --build . --target install
-WORKDIR /usr/src/tdlib/
+WORKDIR /usr/src/tdlib/td
 RUN php SplitSource.php --undo
+WORKDIR /usr/src/tdlib
 RUN ls -l /usr/local
