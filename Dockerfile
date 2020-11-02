@@ -5,7 +5,7 @@ WORKDIR /usr/src/tdlib
 
 RUN apk update
 RUN apk upgrade
-RUN apk add --update python make gcc g++ alpine-sdk linux-headers git zlib-dev openssl-dev gperf php php-ctype cmake
+RUN apk add --update ffmpeg opus python make gcc g++ alpine-sdk linux-headers git zlib-dev openssl-dev gperf php php-ctype cmake
 RUN git clone https://github.com/tdlib/td.git
 WORKDIR /usr/src/tdlib/td
 
