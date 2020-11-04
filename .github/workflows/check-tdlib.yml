@@ -1,0 +1,29 @@
+name: Check TDLib
+
+on:
+  schedule:
+    - cron: "0 * * * *"
+
+  # Run tests for any PRs.
+  pull_request:
+
+jobs:
+  push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Check TDLib last commit id
+        run: wget --header="Accept: application/vnd.github.VERSION.sha" -qO tdlib_commit_id  https://api.github.com/repos/tdlib/td/commits/master
+
+      - name: Check TDLib last tag
+        run: wget --header="Accept: application/vnd.github.VERSION.sha" -qO tdlib_tag  https://api.github.com/repos/tdlib/td/tags
+
+      - name: Commit new commit id
+        if: ${{ "$(<tdlib_commit_id)" == "$(<last_tdlib_commit_id)" }}
+        run: |
+          cat tdlib_commit_id > last_tdlib_commit_id
+          git add last_tdlib_commit_id
+          git commit -m "Update TDLib last commit id"
+          git push
