@@ -10,13 +10,6 @@ on:
     tags:
       - v*
 
-  workflow_run:
-    workflows: ["Check TDLib"]
-    branches: [main]
-    types:
-      - completed
-      - requested
-
   # Run tests for any PRs.
   pull_request:
 
