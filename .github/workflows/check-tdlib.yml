@@ -36,7 +36,7 @@ jobs:
           fi
 
       - name: Commit new commit id
-        if: ${{ $update_tdlib=1 }}
+        if: ${{ update_tdlib=1 }}
         run: |
           cat tdlib_commit_id > last_tdlib_commit_id
           git add last_tdlib_commit_id
