@@ -15,10 +15,8 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Check TDLib last commit id
-        run: wget --header="Accept: application/vnd.github.VERSION.sha" -qO tdlib_commit_id  https://api.github.com/repos/tdlib/td/commits/master
-
-      - name: Check TDLib last tag
-        run: wget --header="Accept: application/vnd.github.VERSION.sha" -qO tdlib_tag  https://api.github.com/repos/tdlib/td/tags
+        run: |
+          wget --header="Accept: application/vnd.github.VERSION.sha" -qO tdlib_commit_id  https://api.github.com/repos/tdlib/td/commits/master
 
       - name: Commit new commit id
         if: ${{ "$(<tdlib_commit_id)" == "$(<last_tdlib_commit_id)" }}
