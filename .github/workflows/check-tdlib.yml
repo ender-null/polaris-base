@@ -31,7 +31,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         run: |
-          if [[ "$(<tdlib_commit_id)" == "$(<last_tdlib_commit_id)" ]]; then
+          if [[ "$(<tdlib_commit_id)" != "$(<last_tdlib_commit_id)" ]]; then
             cat tdlib_commit_id > last_tdlib_commit_id
             git add last_tdlib_commit_id
             git commit -c user.name="GitHub Actions" -c user.email="actions@github.com" --author="${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>" -m "Update TDLib last commit ID"
