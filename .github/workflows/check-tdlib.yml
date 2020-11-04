@@ -29,15 +29,9 @@ jobs:
 
       - name: Check TDLib last commit id
         run: |
-          update_tdlib=1
           if [[ "$(<tdlib_commit_id)" == "$(<last_tdlib_commit_id)" ]]; then
-            $update_tdlib=0
+            cat tdlib_commit_id > last_tdlib_commit_id
+            git add last_tdlib_commit_id
+            git commit -m "Update TDLib last commit id"
+            git push
           fi
-
-      - name: Commit new commit id
-        if: $update_tdlib==1
-        run: |
-          cat tdlib_commit_id > last_tdlib_commit_id
-          git add last_tdlib_commit_id
-          git commit -m "Update TDLib last commit id"
-          git push
