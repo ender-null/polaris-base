@@ -31,9 +31,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.CR_PAT }}
         run: |
-          if [[ "$(<tdlib_commit_id)" != "$(<last_tdlib_commit_id)" ]]; then
-            cat tdlib_commit_id > last_tdlib_commit_id
-            git add last_tdlib_commit_id
+          if [[ "$(<tdlib_commit_id)" != "$(<TDLib)" ]]; then
+            cat tdlib_commit_id > TDLib
+            git add TDLib
             git -c user.name="GitHub Actions" -c user.email="actions@github.com" commit -m "Update TDLib last commit ID" --author="${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>"
             git push
           fi
