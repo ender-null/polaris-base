@@ -9,7 +9,7 @@ on:
       - v*
 
   schedule:
-    - cron: "0 * * * *"
+    - cron: "0 4 * * *"
 
 env:
   IMAGE_NAME: polaris-base
@@ -62,7 +62,7 @@ jobs:
       - name: Generate artifact for TDLib file
         uses: actions/upload-artifact@v2
         with:
-          name: TDLib.txt
+          name: "$(<TDLib.txt)"
           path: TDLib.txt
 
   push:
