@@ -103,3 +103,14 @@ jobs:
 
           docker push $IMAGE_ID:$COMMIT
           docker push $IMAGE_ID:$VERSION
+
+      - name: Get TDLib binary from image
+        run: |
+          docker create $IMAGE_ID $IMAGE_ID:$VERSION
+          docker cp --follow-link IMAGE_ID:/usr/local/lib/libtdjson.so .
+
+      - name: Generate artifact for TDLib binary
+        uses: actions/upload-artifact@v2
+        with:
+          name: libtdjson.so
+          path: libtdjson.so
