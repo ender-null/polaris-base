@@ -9,6 +9,7 @@ RUN apk add --update ffmpeg opus python make gcc g++ alpine-sdk linux-headers gi
 RUN git clone https://github.com/tdlib/td.git
 WORKDIR /usr/src/tdlib/td
 
+RUN git describe --abbrev=0 --tags > tag.txt
 RUN rm -rf build
 RUN mkdir -p /usr/src/tdlib/td/build
 WORKDIR /usr/src/tdlib/td/build

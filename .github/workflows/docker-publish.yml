@@ -87,7 +87,6 @@ jobs:
 
           # Strip git ref prefix from version
           VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
-          COMMIT=$(<TDLib.txt)
 
           # Strip "v" prefix from tag name
           [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
@@ -98,15 +97,25 @@ jobs:
           echo IMAGE_ID=$IMAGE_ID
           echo VERSION=$VERSION
 
-          docker tag $IMAGE_NAME $IMAGE_ID:$COMMIT
           docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
-
-          docker push $IMAGE_ID:$COMMIT
           docker push $IMAGE_ID:$VERSION
+
+      - name: Create container image
+        run: |
+          docker create $IMAGE_ID $IMAGE_ID:$VERSION
+
+      - name: Get TDLib tag from image
+        run: |
+          docker cp IMAGE_ID:/usr/src/tdlib/td/tag.txt .
+          TDLIB_VERSION = echo $(<tag.txt) | sed -e 's/^v//'
+
+      - name: Push image tagged with TDLib version
+        run: |
+          docker tag $IMAGE_NAME $IMAGE_ID:$TDLIB_VERSION
+          docker push $IMAGE_ID:$TDLIB_VERSION
 
       - name: Get TDLib binary from image
         run: |
-          docker create $IMAGE_ID $IMAGE_ID:$VERSION
           docker cp --follow-link IMAGE_ID:/usr/local/lib/libtdjson.so .
 
       - name: Generate artifact for TDLib binary
