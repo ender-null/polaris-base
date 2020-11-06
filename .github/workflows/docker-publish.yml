@@ -34,7 +34,7 @@ jobs:
       - name: Check if commit ID is different
         id: check
         run: |
-          if [[ "$(<tdlib_commit_id)" != "$(<TDLib)" ]]; then
+          if [[ "$(<tdlib_commit_id)" != "$(<TDLib.txt)" ]]; then
             echo "::set-output name=update::1"
             echo "::set-output name=commit_id::$(<tdlib_commit_id)"
           else
@@ -99,7 +99,7 @@ jobs:
 
           docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
           docker push $IMAGE_ID:$VERSION
-          docker create --name $IMAGE_ID $IMAGE_ID:$VERSION
+          docker create --name $IMAGE_NAME $IMAGE_ID:$VERSION
 
       - name: Push tagged image with TDLib version to GitHub Container Registry
         run: |
