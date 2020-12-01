@@ -18,3 +18,5 @@ RUN cmake --build . --target prepare_cross_compiling
 RUN cmake --build . --target install
 WORKDIR /usr/src/tdlib
 RUN ls -l /usr/local
+
+RUN printf "#!/bin/sh\n\nfind /tmp -type f -delete" > /etc/periodic/15min/clean_tmp
