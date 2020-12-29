@@ -12,7 +12,7 @@ on:
     - cron: "0 4 * * *"
 
 env:
-  IMAGE_NAME: polaris-base
+  IMAGE_NAME: polaris-base-debian
 
 jobs:
   check:
@@ -67,7 +67,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Build image
-        run: docker build . --file Dockerfile --tag $IMAGE_NAME
+        run: docker build . --file Dockerfile.debian --tag $IMAGE_NAME
 
       - name: Log into GitHub Container Registry
         run: echo "${{ secrets.CR_PAT }}" | docker login https://ghcr.io -u ${{ github.actor }} --password-stdin
