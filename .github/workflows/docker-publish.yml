@@ -67,7 +67,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Build image
-        run: docker build . --file Dockerfile.debian --tag $IMAGE_NAME
+        run: docker build . --file Dockerfile --tag $IMAGE_NAME
 
       - name: Log into GitHub Container Registry
         run: echo "${{ secrets.CR_PAT }}" | docker login https://ghcr.io -u ${{ github.actor }} --password-stdin
@@ -89,7 +89,7 @@ jobs:
           [ "$VERSION" == "main" ] && VERSION=latest
 
           echo IMAGE_ID=$IMAGE_ID
-          echo VERSION=$VERSION-debian
+          echo VERSION=$VERSION
 
           docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
           docker push $IMAGE_ID:$VERSION
@@ -102,7 +102,7 @@ jobs:
           IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
 
           docker cp $IMAGE_NAME:/usr/src/tdlib/td/tag.txt .
-          TDLIB_VERSION=$(echo $(<tag.txt) | sed -e 's/^v//')-debian
+          TDLIB_VERSION=$(echo $(<tag.txt) | sed -e 's/^v//')
 
           docker tag $IMAGE_NAME $IMAGE_ID:$TDLIB_VERSION
           docker push $IMAGE_ID:$TDLIB_VERSION
