@@ -4,7 +4,7 @@ RUN mkdir -p /usr/src/tdlib
 WORKDIR /usr/src/tdlib
 
 RUN apt-get update
-RUN apt-get upgrade
+RUN apt-get upgrade -y
 RUN apt-get install -y ffmpeg opus-tools install make git zlib1g-dev libssl-dev gperf php-cli cmake clang libc++-dev libc++abi-dev
 RUN git clone https://github.com/tdlib/td.git
 WORKDIR /usr/src/tdlib/td
