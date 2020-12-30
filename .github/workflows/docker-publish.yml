@@ -109,13 +109,13 @@ jobs:
 
       - name: Get TDLib binary from image
         run: |
-          docker cp --follow-link $IMAGE_NAME:/usr/local/lib/libtdjson.so ./libtdjson-alpine.so
+          docker cp --follow-link $IMAGE_NAME:/usr/local/lib/libtdjson.so .
 
       - name: Generate artifact for TDLib binary
         uses: actions/upload-artifact@v2
         with:
           name: libtdjson-alpine.so
-          path: libtdjson-alpine.so
+          path: libtdjson.so
           
   push-debian:
     runs-on: ubuntu-latest
@@ -167,10 +167,10 @@ jobs:
 
       - name: Get TDLib binary from image
         run: |
-          docker cp --follow-link $IMAGE_NAME:/usr/local/lib/libtdjson.so ./libtdjson-debian.so
+          docker cp --follow-link $IMAGE_NAME:/usr/local/lib/libtdjson.so .
 
       - name: Generate artifact for TDLib binary
         uses: actions/upload-artifact@v2
         with:
           name: libtdjson-debian.so
-          path: libtdjson-debian.so
+          path: libtdjson.so
