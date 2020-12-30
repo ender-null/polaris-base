@@ -150,10 +150,13 @@ jobs:
 
           echo IMAGE_ID=$IMAGE_ID
           echo VERSION=$VERSION
+          VERSION+="-debian"
 
+          docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
+          docker push $IMAGE_ID:$VERSION
           docker tag $IMAGE_NAME $IMAGE_ID:debian
           docker push $IMAGE_ID:debian
-          docker create --name $IMAGE_NAME $IMAGE_ID:debian
+          docker create --name $IMAGE_NAME $IMAGE_ID:$VERSION
 
       - name: Push tagged image with TDLib version to GitHub Container Registry
         run: |
