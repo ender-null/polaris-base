@@ -89,7 +89,7 @@ jobs:
           [ "$VERSION" == "main" ] && VERSION=latest
 
           echo IMAGE_ID=$IMAGE_ID
-          echo VERSION=$VERSION-alpine
+          echo VERSION=$VERSION
 
           docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
           docker push $IMAGE_ID:$VERSION
@@ -102,7 +102,7 @@ jobs:
           IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
 
           docker cp $IMAGE_NAME:/usr/src/tdlib/td/tag.txt .
-          TDLIB_VERSION=$(echo $(<tag.txt) | sed -e 's/^v//')-alpine
+          TDLIB_VERSION=$(echo $(<tag.txt) | sed -e 's/^v//')
 
           docker tag $IMAGE_NAME $IMAGE_ID:$TDLIB_VERSION
           docker push $IMAGE_ID:$TDLIB_VERSION
@@ -147,7 +147,7 @@ jobs:
           [ "$VERSION" == "main" ] && VERSION=latest
 
           echo IMAGE_ID=$IMAGE_ID
-          echo VERSION=$VERSION
+          echo VERSION=$VERSION-debian
 
           docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
           docker push $IMAGE_ID:$VERSION
@@ -160,7 +160,7 @@ jobs:
           IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
 
           docker cp $IMAGE_NAME:/usr/src/tdlib/td/tag.txt .
-          TDLIB_VERSION=$(echo $(<tag.txt) | sed -e 's/^v//')
+          TDLIB_VERSION=$(echo $(<tag.txt) | sed -e 's/^v//')-debian
 
           docker tag $IMAGE_NAME $IMAGE_ID:$TDLIB_VERSION
           docker push $IMAGE_ID:$TDLIB_VERSION
