@@ -89,7 +89,7 @@ jobs:
           [ "$VERSION" == "main" ] && VERSION=latest
 
           echo IMAGE_ID=$IMAGE_ID
-          echo VERSION=$VERSION
+          echo VERSION=$VERSION-alpine
 
           docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
           docker push $IMAGE_ID:$VERSION
@@ -102,20 +102,20 @@ jobs:
           IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
 
           docker cp $IMAGE_NAME:/usr/src/tdlib/td/tag.txt .
-          TDLIB_VERSION=$(echo $(<tag.txt) | sed -e 's/^v//')
+          TDLIB_VERSION=$(echo $(<tag.txt) | sed -e 's/^v//')-alpine
 
           docker tag $IMAGE_NAME $IMAGE_ID:$TDLIB_VERSION
           docker push $IMAGE_ID:$TDLIB_VERSION
 
       - name: Get TDLib binary from image
         run: |
-          docker cp --follow-link $IMAGE_NAME:/usr/local/lib/libtdjson.so ./libtdjson.so
+          docker cp --follow-link $IMAGE_NAME:/usr/local/lib/libtdjson.so ./libtdjson-alpine.so
 
       - name: Generate artifact for TDLib binary
         uses: actions/upload-artifact@v2
         with:
-          name: libtdjson.so
-          path: libtdjson.so
+          name: libtdjson-alpine.so
+          path: libtdjson-alpine.so
           
   push-debian:
     runs-on: ubuntu-latest
@@ -147,7 +147,7 @@ jobs:
           [ "$VERSION" == "main" ] && VERSION=latest
 
           echo IMAGE_ID=$IMAGE_ID
-          echo VERSION=$VERSION-debian
+          echo VERSION=$VERSION
 
           docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
           docker push $IMAGE_ID:$VERSION
@@ -160,7 +160,7 @@ jobs:
           IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
 
           docker cp $IMAGE_NAME:/usr/src/tdlib/td/tag.txt .
-          TDLIB_VERSION=$(echo $(<tag.txt) | sed -e 's/^v//')-debian
+          TDLIB_VERSION=$(echo $(<tag.txt) | sed -e 's/^v//')
 
           docker tag $IMAGE_NAME $IMAGE_ID:$TDLIB_VERSION
           docker push $IMAGE_ID:$TDLIB_VERSION
