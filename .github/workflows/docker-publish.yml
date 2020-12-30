@@ -93,6 +93,8 @@ jobs:
 
           docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
           docker push $IMAGE_ID:$VERSION
+          docker tag $IMAGE_NAME $IMAGE_ID:alpine
+          docker push $IMAGE_ID:alpine
           docker create --name $IMAGE_NAME $IMAGE_ID:$VERSION
 
       - name: Push tagged image with TDLib version to GitHub Container Registry
@@ -147,11 +149,11 @@ jobs:
           [ "$VERSION" == "main" ] && VERSION=latest
 
           echo IMAGE_ID=$IMAGE_ID
-          echo VERSION=$VERSION-debian
+          echo VERSION=$VERSION
 
-          docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
-          docker push $IMAGE_ID:$VERSION
-          docker create --name $IMAGE_NAME $IMAGE_ID:$VERSION
+          docker tag $IMAGE_NAME $IMAGE_ID:debian
+          docker push $IMAGE_ID:debian
+          docker create --name $IMAGE_NAME $IMAGE_ID:debian
 
       - name: Push tagged image with TDLib version to GitHub Container Registry
         run: |
