@@ -22,7 +22,7 @@ RUN ls -l /usr/local
 FROM node:alpine AS release
 
 WORKDIR /usr/local/lib
-COPY --from=builder /usr/local/lib/libtd* .
+COPY --from=builder /usr/local/lib/libtd* ./
 
 RUN apk add --update ffmpeg opus python
 RUN npm install npm@latest -g
