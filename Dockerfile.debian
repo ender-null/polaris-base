@@ -18,16 +18,16 @@ RUN cmake --build . --target install
 WORKDIR /usr/src/tdlib
 RUN ls -l /usr/local
 
-FROM node:buster AS release
+# FROM node:buster AS release
 
-WORKDIR /usr/local/lib
-COPY --from=builder /usr/local/lib/libtd* ./
-RUN mkdir -p /usr/src/tdlib/td
-WORKDIR /usr/src/tdlib/td
-COPY --from=builder /usr/src/tdlib/td/tag.txt .
+# WORKDIR /usr/local/lib
+# COPY --from=builder /usr/local/lib/libtd* ./
+# RUN mkdir -p /usr/src/tdlib/td
+# WORKDIR /usr/src/tdlib/td
+# COPY --from=builder /usr/src/tdlib/td/tag.txt .
 
-RUN apt-get update
-RUN apt-get upgrade -y
+# RUN apt-get update
+# RUN apt-get upgrade -y
 RUN apt-get install -y ffmpeg opus-tools python cron
 RUN npm install npm@latest -g
 RUN crontab -l -u root | echo "*/15 * * * * find /tmp -type f -delete" | crontab -u root -
