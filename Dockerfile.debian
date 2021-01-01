@@ -22,6 +22,9 @@ FROM node:buster AS release
 
 WORKDIR /usr/local/lib
 COPY --from=builder /usr/local/lib/libtd* ./
+RUN mkdir -p /usr/src/tdlib/td
+WORKDIR /usr/src/tdlib/td
+COPY --from=builder /usr/local/lib/tag.txt .
 
 RUN apt-get update
 RUN apt-get upgrade -y

@@ -23,6 +23,9 @@ FROM node:alpine AS release
 
 WORKDIR /usr/local/lib
 COPY --from=builder /usr/local/lib/libtd* ./
+RUN mkdir -p /usr/src/tdlib/td
+WORKDIR /usr/src/tdlib/td
+COPY --from=builder /usr/local/lib/tag.txt .
 
 RUN apk add --update ffmpeg opus python
 RUN npm install npm@latest -g
