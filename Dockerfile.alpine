@@ -19,13 +19,16 @@ RUN cmake --build . --target install
 WORKDIR /usr/src/tdlib
 RUN ls -l /usr/local
 
-# FROM node:alpine AS release
+FROM node:alpine AS release
 
-# WORKDIR /usr/local/lib
-# COPY --from=builder /usr/local/lib/libtd* ./
-# RUN mkdir -p /usr/src/tdlib/td
-# WORKDIR /usr/src/tdlib/td
-# COPY --from=builder /usr/src/tdlib/td/tag.txt .
+WORKDIR /usr/local/lib
+COPY --from=builder /usr/local/lib/* ./
+RUN mkdir -p /usr/local/include/td/
+WORKDIR /usr/local/include/td/
+COPY --from=builder /usr/local/include/td/* ./
+RUN mkdir -p /usr/src/tdlib/td
+WORKDIR /usr/src/tdlib/td
+COPY --from=builder /usr/src/tdlib/td/tag.txt .
 
 RUN apk add --update ffmpeg opus python
 RUN npm install npm@latest -g
