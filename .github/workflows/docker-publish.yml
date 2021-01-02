@@ -97,18 +97,6 @@ jobs:
           docker push $IMAGE_ID:alpine
           docker create --name $IMAGE_NAME $IMAGE_ID:$VERSION
 
-      - name: Push tagged image with TDLib version to GitHub Container Registry
-        run: |
-          IMAGE_ID=ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME
-          # Change all uppercase to lowercase
-          IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
-
-          docker cp $IMAGE_NAME:/usr/src/tdlib/td/tag.txt .
-          TDLIB_VERSION=$(echo $(<tag.txt) | sed -e 's/^v//')
-
-          docker tag $IMAGE_NAME $IMAGE_ID:$TDLIB_VERSION
-          docker push $IMAGE_ID:$TDLIB_VERSION
-
       - name: Get TDLib binary from image
         run: |
           docker cp --follow-link $IMAGE_NAME:/usr/local/lib/libtdjson.so .
@@ -118,7 +106,7 @@ jobs:
         with:
           name: libtdjson-alpine.so
           path: libtdjson.so
-          
+
   push-debian:
     runs-on: ubuntu-latest
     needs: update
@@ -157,18 +145,6 @@ jobs:
           docker tag $IMAGE_NAME $IMAGE_ID:debian
           docker push $IMAGE_ID:debian
           docker create --name $IMAGE_NAME $IMAGE_ID:$VERSION
-
-      - name: Push tagged image with TDLib version to GitHub Container Registry
-        run: |
-          IMAGE_ID=ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME
-          # Change all uppercase to lowercase
-          IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
-
-          docker cp $IMAGE_NAME:/usr/src/tdlib/td/tag.txt .
-          TDLIB_VERSION=$(echo $(<tag.txt) | sed -e 's/^v//')-debian
-
-          docker tag $IMAGE_NAME $IMAGE_ID:$TDLIB_VERSION
-          docker push $IMAGE_ID:$TDLIB_VERSION
 
       - name: Get TDLib binary from image
         run: |

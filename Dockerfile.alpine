@@ -9,7 +9,6 @@ RUN apk add --update make gcc g++ alpine-sdk linux-headers git zlib-dev openssl-
 RUN git clone https://github.com/tdlib/td.git
 WORKDIR /usr/src/tdlib/td
 
-RUN git describe --abbrev=0 --tags > tag.txt
 RUN rm -rf build
 RUN mkdir -p /usr/src/tdlib/td/build
 WORKDIR /usr/src/tdlib/td/build
@@ -22,13 +21,7 @@ RUN ls -l /usr/local
 FROM node:alpine AS release
 
 WORKDIR /usr/local/lib
-COPY --from=builder /usr/local/lib/* ./
-RUN mkdir -p /usr/local/include/td/
-WORKDIR /usr/local/include/td/
-COPY --from=builder /usr/local/include/td/* ./
-RUN mkdir -p /usr/src/tdlib/td
-WORKDIR /usr/src/tdlib/td
-COPY --from=builder /usr/src/tdlib/td/tag.txt .
+COPY --from=builder /usr/local/lib/libtdjson.so ./
 
 RUN apk add --update make gcc g++ ffmpeg opus python
 RUN npm install npm@latest -g
