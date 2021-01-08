@@ -3,4 +3,12 @@
 <a href="https://github.com/luksireiku/polaris-base/actions?query=workflow%3ADocker">
     <img alt="Build Status" src="https://github.com/luksireiku/polaris-base/workflows/Docker/badge.svg"></a>
 
-Base image for **[polaris](https://github.com/luksireiku/polaris)** and **[polaris.js](https://github.com/luksireiku/polaris.js)**. It's based on _node-alpine_ with **TDLib** precompiled, **FFmpeg** and **Opus**
+Base image for **[polaris](https://github.com/luksireiku/polaris)** and **[polaris.py](https://github.com/luksireiku/polaris.py)**. Comes in two versions `alpine` based on `node:alpine` and `debian` based on `node:buster`. They come with the following changes:
+
+- TDLib precompiled in `/usr/local/lib/libtdjson.so`
+- Git
+- Python3 Python3-dev Python3-pip
+- Latest NPM version
+- FFmpeg and Opus
+- Compiler tools: `make` and (Debian) `cmake` `clang` / (Alpine) `gcc` `g++`
+- Cron job to clean `/tmp` every 15 minutes
