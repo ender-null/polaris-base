@@ -12,3 +12,4 @@ Base image for **[polaris](https://github.com/luksireiku/polaris)** and **[polar
 - FFmpeg and Opus
 - Compiler tools: `make` and (Debian) `cmake` `clang` / (Alpine) `gcc` `g++`
 - Cron job to clean `/tmp` every 15 minutes
+- Set timezone to Europe/Madrid
