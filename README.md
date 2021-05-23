@@ -1,9 +1,9 @@
 # polaris-base
 
-<a href="https://github.com/luksireiku/polaris-base/actions?query=workflow%3ADocker">
-    <img alt="Build Status" src="https://github.com/luksireiku/polaris-base/workflows/Docker/badge.svg"></a>
+<a href="https://github.com/ender-null/polaris-base/actions?query=workflow%3ADocker">
+    <img alt="Build Status" src="https://github.com/ender-null/polaris-base/workflows/Docker/badge.svg"></a>
 
-Base image for **[polaris](https://github.com/luksireiku/polaris)** and **[polaris.py](https://github.com/luksireiku/polaris.py)**. Comes in two versions `alpine` based on `node:alpine` and `debian` based on `node:buster`. They come with the following changes:
+Base image for **[polaris](https://github.com/ender-null/polaris)** and **[polaris.py](https://github.com/ender-null/polaris.py)**. Comes in two versions `alpine` based on `node:alpine` and `debian` based on `node:buster`. They come with the following changes:
 
 - TDLib precompiled in `/usr/local/lib/libtdjson.so`
 - Git
