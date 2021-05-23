@@ -19,6 +19,8 @@ RUN ls -l /usr/local
 
 FROM node:buster AS release
 
+LABEL org.opencontainers.image.source https://github.com/ender-null/polaris-base
+
 WORKDIR /usr/local/lib
 COPY --from=builder /usr/local/lib/libtdjson.so ./
 
