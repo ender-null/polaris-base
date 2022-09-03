@@ -15,14 +15,14 @@ WORKDIR /usr/src/tdlib/td/build
 RUN CXXFLAGS="-stdlib=libc++" CC=/usr/bin/clang CXX=/usr/bin/clang++ cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX:PATH=/usr/local ..
 RUN cmake --build . --target install
 WORKDIR /usr/src/tdlib
-RUN ls -l /usr/local
+RUN ls -l /usr
 
 FROM node:buster AS release
 
 LABEL org.opencontainers.image.source https://github.com/ender-null/polaris-base
 
-WORKDIR /usr/local/lib
-COPY --from=builder /usr/local/lib/libtdjson.so ./
+WORKDIR /usr/lib
+COPY --from=builder /usr/lib/libtdjson.so ./
 
 RUN apt-get update
 RUN apt-get upgrade -y
