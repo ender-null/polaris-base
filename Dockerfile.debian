@@ -4,7 +4,7 @@ FROM node:slim AS release
 LABEL org.opencontainers.image.source https://github.com/ender-null/polaris-base
 
 WORKDIR /usr/lib
-COPY --from=tdlib /usr/lib/libtdjson.so ./
+COPY --from=tdlib /usr/local/lib/libtdjson.so ./
 
 RUN apt-get update
 RUN apt-get upgrade -y
