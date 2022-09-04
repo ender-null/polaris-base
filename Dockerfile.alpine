@@ -1,29 +1,10 @@
-FROM node:alpine AS builder
-
-RUN mkdir -p /usr/src/tdlib
-WORKDIR /usr/src/tdlib
-
-RUN apk update
-RUN apk upgrade
-RUN apk add --update make gcc g++ alpine-sdk linux-headers git zlib-dev openssl-dev gperf php cmake ccache
-RUN git clone https://github.com/tdlib/td.git
-WORKDIR /usr/src/tdlib/td
-
-RUN rm -rf build
-RUN mkdir -p /usr/src/tdlib/td/build
-WORKDIR /usr/src/tdlib/td/build
-RUN cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX:PATH=/usr/local ..
-RUN cmake --build . --target prepare_cross_compiling
-RUN cmake --build . --target install
-WORKDIR /usr/src/tdlib
-RUN ls -l /usr/local
-
+FROM ghcr.io/ender-null/tdlib-docker:alpine AS tdlib
 FROM node:alpine AS release
 
 LABEL org.opencontainers.image.source https://github.com/ender-null/polaris-base
 
 WORKDIR /usr/local/lib
-COPY --from=builder /usr/local/lib/libtdjson.so ./
+COPY --from=tdlib /usr/local/lib/libtdjson.so ./
 
 RUN apk add --update git tzdata make libc6-compatgcc gcc g++ musl-dev ffmpeg opus python3 python3-dev py3-pip 
 RUN npm install yarn@latest -g --force

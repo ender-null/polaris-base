@@ -1,28 +1,10 @@
-FROM node:buster AS builder
-
-RUN mkdir -p /usr/src/tdlib
-WORKDIR /usr/src/tdlib
-
-RUN apt-get update
-RUN apt-get upgrade -y
-RUN apt-get install -y make git zlib1g-dev libssl-dev gperf php-cli cmake clang libc++-dev libc++abi-dev
-RUN git clone https://github.com/tdlib/td.git
-WORKDIR /usr/src/tdlib/td
-
-RUN rm -rf build
-RUN mkdir -p /usr/src/tdlib/td/build
-WORKDIR /usr/src/tdlib/td/build
-RUN CXXFLAGS="-stdlib=libc++" CC=/usr/bin/clang CXX=/usr/bin/clang++ cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX:PATH=/usr/local ..
-RUN cmake --build . --target install
-WORKDIR /usr/src/tdlib
-RUN ls -l /usr
-
-FROM node:buster AS release
+FROM ghcr.io/ender-null/tdlib-docker:debian AS tdlib
+FROM node:slim AS release
 
 LABEL org.opencontainers.image.source https://github.com/ender-null/polaris-base
 
 WORKDIR /usr/lib
-COPY --from=builder /usr/lib/libtdjson.so ./
+COPY --from=tdlib /usr/lib/libtdjson.so ./
 
 RUN apt-get update
 RUN apt-get upgrade -y
