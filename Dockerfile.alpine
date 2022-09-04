@@ -25,7 +25,7 @@ LABEL org.opencontainers.image.source https://github.com/ender-null/polaris-base
 WORKDIR /usr/local/lib
 COPY --from=builder /usr/local/lib/libtdjson.so ./
 
-RUN apk add --update git tzdata make gcc g++ ffmpeg opus python3 python3-dev py3-pip libc6-compat
+RUN apk add --update git tzdata make libc6-compatgcc gcc g++ musl-dev ffmpeg opus python3 python3-dev py3-pip 
 RUN npm install yarn@latest -g --force
 RUN crontab -l -u root | echo "*/15 * * * * find /tmp -type f -delete" | crontab -u root -
 ENV TZ=Europe/Madrid
