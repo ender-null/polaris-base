@@ -2,6 +2,8 @@ FROM ghcr.io/ender-null/tdlib-docker:debian AS tdlib
 FROM node:slim AS release
 
 LABEL org.opencontainers.image.source https://github.com/ender-null/polaris-base
+LABEL org.opencontainers.image.version debian
+LABEL org.opencontainers.image.description debian
 
 WORKDIR /usr/lib
 COPY --from=tdlib /usr/local/lib/libtdjson.so ./

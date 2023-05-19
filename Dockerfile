@@ -2,6 +2,8 @@ FROM ghcr.io/ender-null/tdlib-docker:latest AS tdlib
 FROM node:alpine AS release
 
 LABEL org.opencontainers.image.source https://github.com/ender-null/polaris-base
+LABEL org.opencontainers.image.version alpine
+LABEL org.opencontainers.image.description alpine
 
 WORKDIR /usr/local/lib
 COPY --from=tdlib /usr/local/lib/libtdjson.so ./
