@@ -1,4 +1,4 @@
-FROM ghcr.io/ender-null/tdlib-docker:alpine AS tdlib
+FROM ghcr.io/ender-null/tdlib-docker:latest AS tdlib
 FROM node:alpine AS release
 
 LABEL org.opencontainers.image.source https://github.com/ender-null/polaris-base
