@@ -7,14 +7,10 @@ WORKDIR /usr/local/lib
 COPY --from=tdlib /usr/local/lib/libtdjson.so ./
 
 ENV GLIBC_REPO=https://github.com/sgerrand/alpine-pkg-glibc
-ENV GLIBC_VERSION=2.30-r0
-RUN set -ex && \
-    apk --update add libstdc++ curl ca-certificates && \
-    for pkg in glibc-${GLIBC_VERSION} glibc-bin-${GLIBC_VERSION}; \
-        do curl -sSL ${GLIBC_REPO}/releases/download/${GLIBC_VERSION}/${pkg}.apk -o /tmp/${pkg}.apk; done && \
-    apk add --allow-untrusted /tmp/*.apk && \
-    rm -v /tmp/*.apk && \
-    /usr/glibc-compat/sbin/ldconfig /lib /usr/glibc-compat/lib
+ENV GLIBC_VERSION=2.35-r1
+RUN wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub\
+    wget ${GLIBC_REPO}/releases/download/${GLIBC_VERSION}/glibc-${GLIBC_VERSION}.apk\
+    apk add glibc-${GLIBC_VERSION}.apk
 
 RUN apk add --update git tzdata make gcc g++ musl-dev ffmpeg opus python3 python3-dev py3-pip
 RUN npm install yarn@latest -g --force
