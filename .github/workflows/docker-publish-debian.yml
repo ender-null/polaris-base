@@ -77,7 +77,7 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           flavor: |
             latest=false
-            suffix=-debian,onlatest=true
+            suffix=-debian
           tags: |
             type=schedule
             type=ref,event=branch
